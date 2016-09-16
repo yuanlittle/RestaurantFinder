@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html  ng-app="myApp">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function initMap() {
+            var mapDiv = document.getElementById('map');
+            var map = new google.maps.Map(mapDiv, {
+                center: {lat: 44.540, lng: -78.546},
+                zoom: 8
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAViXlapg8TOYWkpYT3yZbogVHDeoKE9Ts&callback=initMap" async defer></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        #map {
+            height: 500px;
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body ng-controller="myCtrl">
+
+<h2>Restaurant Finder</h2>
+<form ng-submit="searchAddress()">
+    <input type="text" ng-model="food" size="20" placeholder="Food">
+    <input type="text" ng-model="address" size="60" placeholder="Location">
+    <input type="submit" value="Search">
+    <ol>
+    <li ng-repeat="x in myData.businesses">
+    {{x.name}} @ ({{x.location.display_address[0]}}, {{x.location.display_address[1]}})
+    </li>
+    </ol>
+    <h2>{{myData}},{{myData.region.center.longitude}}</h2>
+
+</form>
+
+<div id="map"></div>
+
+</body>
+</html>
