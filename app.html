@@ -3,45 +3,64 @@
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="app.js"></script>
-    <script>
-        function initMap() {
-            var mapDiv = document.getElementById('map');
-            var map = new google.maps.Map(mapDiv, {
-                center: {lat: 44.540, lng: -78.546},
-                zoom: 8
-            });
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAViXlapg8TOYWkpYT3yZbogVHDeoKE9Ts&callback=initMap" async defer></script>
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAViXlapg8TOYWkpYT3yZbogVHDeoKE9Ts"></script>
 
     <style>
         html, body {
             height: 100%;
         }
         #map {
-            height: 500px;
-            width: 500px;
+            height: 400px;
+            width: 400px;
         }
     </style>
 </head>
 
 <body ng-controller="myCtrl">
 
-<h2>Restaurant Finder</h2>
-<form ng-submit="searchAddress()">
+    <div class="jumbotron text-center">
+        <h1>Restaurant Finder</h1>
+        <form ng-submit="searchAddress()">
     <input type="text" ng-model="food" size="20" placeholder="Food">
     <input type="text" ng-model="address" size="60" placeholder="Location">
     <input type="submit" value="Search">
-    <ol>
-    <li ng-repeat="x in myData.businesses">
-    {{x.name}} @ ({{x.location.display_address[0]}}, {{x.location.display_address[1]}})
-    </li>
-    </ol>
-    <h2>{{myData}},{{myData.region.center.longitude}}</h2>
+        </form>
+    </div>
+<div class="container">
+  <div class="row">
+      
+    <div class="col-sm-3" style="background-color:#66ffff;">               
+    <h2>My Favorite List</h2>
+		<!--put the list here -->
+		<div ng-repeat="x in favList">
+			<input type="checkbox" ng-model="x.marked"> <span>{{x.name}} @ ({{x.location.display_address[0]}}, {{x.location.display_address[1]}})</span>
+		</div>
+	<button ng-click="remove()">Remove</button>
+    </div>
+      
+    <div class="col-sm-5" style="background-color:lavender;">
+        <h2>Results:</h2>
+    <div>
+        <ol>
+            <li ng-repeat="x in myData.businesses">
+        <input type="checkbox" ng-model="x.marked">
+        <span>{{x.name}} @ ({{x.location.display_address[0]}}, {{x.location.display_address[1]}})</span>
+            </li>
+        </ol>
+    </div>
+        <button ng-click="add()">Save to Favorite</button>
+    </div>
 
-</form>
-
-<div id="map"></div>
-
+    <div class="col-sm-4" style="background-color:#66ffff;">
+       <h2>Map</h2>
+        <div id="map"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
